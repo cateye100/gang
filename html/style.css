@@ -1,0 +1,151 @@
+:root{ --bg:#0f1219; --panel:#161a24; --panel-2:#1c2030; --muted:#7982a2; --text:#e6e9f5; --acc:#6c8cff; --good:#3bd671; --bad:#ff5d6c; --warn:#ffc857; --ghost:#2a2f42; --radius:16px; --radius-sm:12px; --shadow:0 12px 40px rgba(0,0,0,.35);} *{box-sizing:border-box} html,body{height:100%;margin:0;background:transparent;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:var(--text)} body{display:flex;align-items:center;justify-content:center} .hidden{display:none!important}
+.panel{width:min(1100px,95vw);height:min(760px,92vh);background:rgba(10,12,20,.35); backdrop-filter: blur(12px) saturate(120%); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow); display:grid; grid-template-rows:auto 1fr 42px; overflow:hidden}
+header{display:flex; align-items:center; gap:12px; padding:10px 16px; background:rgba(12,14,20,.6); border-bottom:1px solid rgba(255,255,255,.06)} header .title{display:flex;align-items:center;gap:10px} .badge{padding:2px 8px;border-radius:999px;background:rgba(108,140,255,.15);color:#cfe0ff;font-size:12px} .grow{flex:1} .iconbtn{appearance:none;border:0;background:var(--ghost);color:var(--text);border-radius:10px; padding:8px 10px; cursor:pointer;transition:.2s} .iconbtn:hover{filter:brightness(1.1)}
+#devRibbon{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06)} #devRibbon .muted{color:#aeb7d0;font-size:12px} #devRibbon .r-actions{display:flex;gap:8px;align-items:center}
+.body{display:grid; grid-template-columns: 220px 1fr; height:100%} .sidebar{background:rgba(22,26,36,.35); border-right:1px solid rgba(255,255,255,.06); padding:12px} .sidebar .section{font-weight:600;color:#aeb7d0; font-size:12px; letter-spacing:.4px; margin:10px 8px} .tabbtn{width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; color:#c8d1ef; background:transparent; border:0; cursor:pointer; transition:.2s} .tabbtn:hover{background:rgba(108,140,255,.08)} .tabbtn.active{background:rgba(108,140,255,.18); color:#fff} .tabbtn .dot{width:8px;height:8px;border-radius:999px;background:var(--muted)}
+.content{background:rgba(28,32,48,.35); padding:16px; overflow:auto}
+.toolbar{display:flex; gap:8px; align-items:center; margin:0 0 12px} .search{flex:1; display:flex; align-items:center; gap:8px; background:rgba(15,19,32,.6); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:8px 10px} .search input{flex:1; background:transparent; border:0; outline:0; color:var(--text)} .btn{appearance:none; border:0; background:var(--acc); color:#0b0f1a; font-weight:700; padding:10px 12px; border-radius:12px; cursor:pointer} .btn.secondary{background:#262c41;color:#cdd5f5} .btn.ghost{background:transparent; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); color:#cdd5f5}
+.grid{display:grid; gap:12px} .grid.cols-3{grid-template-columns: repeat(3, 1fr)} @media (max-width: 980px){ .body{grid-template-columns: 64px 1fr} .sidebar .label{display:none} .grid.cols-3{grid-template-columns:1fr} }
+.card{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:12px} .card h3{margin:0 0 8px; font-size:14px; color:#aeb7d0; font-weight:600; letter-spacing:.3px} .stat{font-size:28px; font-weight:800}
+table{width:100%; border-collapse:separate; border-spacing:0 8px} thead th{font-size:12px; color:#9aa4c3; font-weight:600; text-align:left; padding:0 10px} tbody td{background:rgba(255,255,255,.03); padding:12px 10px; border-top:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06)} tbody tr td:first-child{border-left:1px solid rgba(255,255,255,.06); border-top-left-radius:10px; border-bottom-left-radius:10px} tbody tr td:last-child{border-right:1px solid rgba(255,255,255,.06); border-top-right-radius:10px; border-bottom-right-radius:10px}
+.status{display:inline-flex; align-items:center; gap:6px} .pill{padding:2px 8px; border-radius:999px; background:#24304d; color:#cfe0ff; font-size:12px} .pill.good{background:rgba(59,214,113,.18); color:#bff3ce} .pill.bad{background:rgba(255,93,108,.18); color:#ffb5bd}
+.toasts{position:fixed; right:18px; top:18px; display:grid; gap:8px; z-index:9999} .toast{background:#0f1320; color:#e9ecfb; padding:10px 12px; border:1px solid rgba(255,255,255,.08); border-radius:12px; box-shadow:var(--shadow)}
+.empty{display:flex; align-items:center; justify-content:center; min-height:220px; color:#a0aac7} .skeleton{background:linear-gradient(90deg, rgba(255,255,255,.05), rgba(255,255,255,.1), rgba(255,255,255,.05)); background-size:200% 100%; animation:s 1.2s linear infinite} @keyframes s{0%{background-position:0 0}100%{background-position:200% 0}}
+.footer{padding:10px 14px; display:flex; gap:8px; justify-content:flex-end; color:#9aa4c3; font-size:12px} .kbd{padding:2px 6px; border-radius:6px; background:#13182a; border:1px solid rgba(255,255,255,.08); color:#cdd5f5}
+
+/* === Interactive territories map === */
+.map-viewport{
+  position:relative;
+  width:100%;
+  height:560px;
+  background:#0f1320;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  overflow:hidden;
+  touch-action:none;
+}
+.map-layer{
+  position:absolute;
+  left:0; top:0;
+  transform-origin: 0 0;
+  user-select:none;
+  -webkit-user-drag: none;
+  will-change: transform;
+}
+.map-viewport.grab{ cursor: grab; }
+.map-viewport.grabbing{ cursor: grabbing; }
+.map-hint{ position:absolute; right:10px; bottom:10px; font-size:12px; color:#aeb7d0; background:rgba(0,0,0,.35); padding:4px 8px; border-radius:8px; }
+.map-controls{ position:absolute; right:10px; top:10px; display:flex; flex-direction:column; gap:6px; }
+.map-controls button{ appearance:none; border:0; background:rgba(255,255,255,.1); color:#e9ecfb; border-radius:8px; padding:6px 8px; cursor:pointer }
+
+/* === Map markers overlay === */
+#mapOverlay{ position:absolute; left:0; top:0; transform-origin:0 0; }
+.marker{ position:absolute; transform: translate(-6px,-6px); }
+.marker .dot{ width:12px; height:12px; border-radius:50%; background:#6c8cff; border:2px solid rgba(255,255,255,.9); box-shadow:0 0 12px rgba(108,140,255,.8); }
+.marker .mlabel{ position:absolute; left:14px; top:-2px; background:rgba(0,0,0,.5); color:#fff; font-size:12px; padding:2px 6px; border-radius:6px; white-space:nowrap; transform: translateY(-50%); }
+
+/* === Player marker styling === */
+.marker.player{ position:absolute; }
+.marker.player .arrow{
+  width:0; height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-bottom:16px solid #5bd4ff;
+  filter: drop-shadow(0 0 8px rgba(91,212,255,.8));
+}
+.marker.player .mlabel{
+  position:absolute; left:14px; top:-4px;
+  background:rgba(0,0,0,.55); color:#eaf7ff; font-size:12px;
+  padding:2px 6px; border-radius:6px; white-space:nowrap;
+  transform: translateY(-50%);
+}
+
+#mapOverlay, #mapOverlay * { pointer-events: none; }
+
+/* layering fix */
+.map-viewport{ position:relative; pointer-events:auto; }
+#mapLayer{ z-index: 1; }
+#mapOverlay{ z-index: 2; pointer-events:none; }
+.map-controls{ z-index: 3; }
+
+/* @keyframes playerPulse removed */ @keyframes playerPulse_removed { 0%{ transform: scale(1);} 50%{ transform: scale(1.15);} 100%{ transform: scale(1);} }
+.marker.player .arrow{ transform-origin: 50% 100%; }
+
+/* Pick mode visuals */
+.pickmode .map-viewport { cursor: crosshair; }
+.pick-badge {
+  position: fixed; right: 12px; top: 12px; z-index: 10000;
+  background: rgba(255,200,0,.15); border: 1px solid rgba(255,200,0,.5);
+  color: #ffd24d; font-size: 12px; padding: 6px 8px; border-radius: 6px;
+  pointer-events: none;
+}
+
+
+/* === v31 Backdrop removal & transparent page === */
+html, body {
+  background: transparent !important;
+}
+/* Common overlay/backdrop classes off */
+.backdrop, .overlay, .modal-backdrop, .panel-backdrop, #backdrop, #overlay {
+  display: none !important;
+  background: transparent !important;
+}
+/* Ensure the root panel itself doesn't paint a dim layer */
+#panel {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+/* If panel had an ::before veil, kill it */
+#panel::before, #panel::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+}
+/* Keep the actual content cards unchanged (still visible) */
+
+
+/* === Patch: restore panel & page backgrounds === */
+body{ background: var(--bg) !important; }
+#panel{ background: var(--panel) !important; box-shadow: var(--shadow) !important; }
+#panel::before, #panel::after{ display: initial !important; }
+
+
+/* === User patch: transparent page background for NUI === */
+html, body { background: transparent !important; }
+
+
+/* === Custom: transparent backdrop & panel (requested) === */
+html, body { background: transparent !important; }
+#panel { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+
+
+/* ct-gang: title layout & icon left */
+.title{ display:flex; align-items:center; gap:.5rem; }
+.gang-small{ font-size:1rem; line-height:1.2; font-weight:600; opacity:.9; }
+.gang-icon{ font-size:1.1rem; transform:translateY(1px); }
+
+
+/* ct-gang: iPad-like pill for gang label */
+#gangLabel{
+  display:inline-block;
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(3px);
+}
+.gang-icon{ margin-right:.5rem; font-size:1.1rem; transform:translateY(1px); }
+
+
+/* ==== ct-gang HUD (prompt + timer) ==== */
+#hud{ position:fixed; left:0; right:0; bottom:40px; display:flex; flex-direction:column; align-items:center; gap:14px; pointer-events:none; z-index:99999; }
+.hud-prompt{ display:flex; align-items:center; gap:10px; background:rgba(10,12,20,.85); border:1px solid rgba(255,255,255,.08);
+  padding:10px 14px; border-radius:12px; box-shadow: 0 10px 26px rgba(0,0,0,.45); font-weight:700; letter-spacing:.3px; }
+.hud-prompt .hud-key{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px;
+  background:rgba(108,140,255,.2); border:1px solid rgba(108,140,255,.55); color:#d6e2ff; font-weight:800; }
+.hud-cap{ width:min(520px, 85vw); background:rgba(10,12,20,.85); border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:12px; box-shadow:0 10px 26px rgba(0,0,0,.45); }
+.hud-cap .cap-title{ font-size:14px; color:#cfe0ff; margin-bottom:8px; text-align:center; }
+.hud-cap .cap-bar{ position:relative; height:12px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; }
+.hud-cap #capFill{ position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg, #6c8cff, #5bd4ff); }
+.hud-cap .cap-time{ margin-top:6px; font-size:12px; color:#aeb7d0; text-align:center; }
+.hidden{ display:none !important; }
